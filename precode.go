@@ -50,8 +50,13 @@ func getTasks(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	w.Write(resp)
+	w.WriteHeader(http.StatusBadRequest)
+	_, err = w.Write(resp)
+	if err != err {
+		err = fmt.Errorf("write response: ", err)
+		fmt.Println(err)
+		return
+	}
 }
 
 func postTasks(w http.ResponseWriter, r *http.Request) {
@@ -67,7 +72,6 @@ func postTasks(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	tasks[tas.ID] = tas
-	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 	fmt.Println("postTask req. Tasks:", tasks)
 
@@ -89,7 +93,12 @@ func getIdTasks(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	w.Write(resp)
+	_, err = w.Write(resp)
+	if err != err {
+		err = fmt.Errorf("write response: ", err)
+		fmt.Println(err)
+		return
+	}
 }
 
 func deleteTasks(w http.ResponseWriter, r *http.Request) {
@@ -100,7 +109,6 @@ func deleteTasks(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	delete(tasks, id)
-	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 }
 
