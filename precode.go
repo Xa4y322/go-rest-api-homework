@@ -52,10 +52,8 @@ func getTasks(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusBadRequest)
 	_, err = w.Write(resp)
-	if err != err {
-		err = fmt.Errorf("write response: ", err)
-		fmt.Println(err)
-		return
+	if err != nil {
+		http.Error(w, fmt.Errorf("writing tasks data error %w", err).Error(), http.StatusInternalServerError)
 	}
 }
 
@@ -94,10 +92,8 @@ func getIdTasks(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	_, err = w.Write(resp)
-	if err != err {
-		err = fmt.Errorf("write response: ", err)
-		fmt.Println(err)
-		return
+	if err != nil {
+		http.Error(w, fmt.Errorf("writing tasks data error %w", err).Error(), http.StatusInternalServerError)
 	}
 }
 
